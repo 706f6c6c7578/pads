@@ -16,8 +16,8 @@ func main() {
 
 	for i := 1; i <= n; i++ {
 		fmt.Printf("Sheet %d:\n", i)
-		for j := 0; j < 15; j++ {
-			for k := 0; k < 10; k++ {
+		for j := 0; j < 10; j++ {
+			for k := 0; k < 5; k++ {
 				for l := 0; l < 5; l++ {
 					num, _ := rand.Int(rand.Reader, big.NewInt(26))
 					fmt.Printf("%c", 'A'+num.Int64())
