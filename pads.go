@@ -29,7 +29,7 @@ func main() {
 	}
 
 	for i := 1; i <= n; i++ {
-		fmt.Printf("Sheet %d:\n", i)
+		fmt.Printf("*DESTROY AFTER USE*\n")
 		for j := 0; j < lps; j++ {
 			for k := 0; k < gpl; k++ {
 				if l {
