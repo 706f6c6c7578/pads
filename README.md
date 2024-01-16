@@ -1,5 +1,5 @@
 # pads
-For educational purposes, when creating OTP sheets for "Dein Star", "Diana Cryptosystem" and binary notation.
+For educational purposes, when creating OTP sheets for "Dein Star", the "Diana Cryptosystem" or in binary notation.
 
 Do not use the first group, on a pad, for encryption. Leave the first group as it is,
 so that the receiver, of the encrypted message, knows what pad was used.
