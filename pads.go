@@ -1,10 +1,9 @@
 package main
 
 import (
-	"crypto/rand"
 	"flag"
 	"fmt"
-	"math/big"
+	"github.com/google/go-tpm/legacy/tpm2"
 	"os"
 )
 
@@ -30,24 +29,32 @@ func main() {
 		os.Exit(1)
 	}
 
+	rwc, err := tpm2.OpenTPM()
+	if err != nil {
+		fmt.Printf("TPM öffnen fehlgeschlagen: %v\n", err)
+		return
+	}
+	defer rwc.Close()
+
 	for i := 1; i <= n; i++ {
 		fmt.Printf("*DESTROY AFTER USE*\n")
 		for j := 0; j < lps; j++ {
 			for k := 0; k < gpl; k++ {
 				if l {
+					random, _ := tpm2.GetRandom(rwc, 5)
 					for m := 0; m < 5; m++ {
-						num, _ := rand.Int(rand.Reader, big.NewInt(26))
-						fmt.Printf("%c", 'A'+num.Int64())
+						fmt.Printf("%c", 'A'+(random[m]%26))
 					}
 				}
 				if d {
-					num, _ := rand.Int(rand.Reader, big.NewInt(100000))
-					fmt.Printf("%05d", num.Int64())
+					random, _ := tpm2.GetRandom(rwc, 3)
+					num := uint32(random[0]) | uint32(random[1])<<8 | uint32(random[2])<<16
+					fmt.Printf("%05d", num%100000)
 				}
 				if b {
+					random, _ := tpm2.GetRandom(rwc, 1)
 					for m := 0; m < 5; m++ {
-						num, _ := rand.Int(rand.Reader, big.NewInt(2))
-						fmt.Printf("%01d", num.Int64())
+						fmt.Printf("%01d", (random[0]>>m)&1)
 					}
 				}
 				fmt.Print(" ")
@@ -59,4 +66,3 @@ func main() {
 		}
 	}
 }
-
